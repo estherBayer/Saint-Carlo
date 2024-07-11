@@ -67,7 +67,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import Modal from '~/components/Modal.vue'; // Import the Modal component
+import Modal from '~/components/modal.vue'; // Import the Modal component
 
 const props = defineProps({
   blok: {
