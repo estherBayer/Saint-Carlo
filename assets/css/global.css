@@ -1,0 +1,33 @@
+/* assets/css/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap');
+
+body {
+  font-family: 'Arimo', sans-serif;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:is(h1, h2, h3, p, li, article) {
+  margin-block-start: var(--metric-box-spacing);
+}
+
+.inner-container {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.flex-left {
+  @apply flex items-start justify-start;
+}
+
+:root {
+  --base-font-size: 14px;
+}
+
+
