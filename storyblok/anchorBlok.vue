@@ -6,9 +6,9 @@
 const props = defineProps({
   blok: {
     type: Object,
-    required: true
-  }
-});
+    required: true,
+  },
+})
 </script>
 
 <style scoped>

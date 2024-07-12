@@ -1,11 +1,22 @@
 <template>
   <div v-editable="blok">
-    <Carousel v-bind="settings" :breakpoints="breakpoints" :itemsToShow="3.95" :wrapAround="true" :transition="500" @afterSlideChange="handleSlideChange">
+    <Carousel
+      v-bind="settings"
+      :breakpoints="breakpoints"
+      :itemsToShow="3.95"
+      :wrapAround="true"
+      :transition="500"
+      @afterSlideChange="handleSlideChange"
+    >
       <template #addons>
         <Navigation />
         <Pagination />
       </template>
-      <Slide v-for="(column, index) in blok.columns" :key="column._uid" :class="{'carousel__slide--visible': visibleSlides.includes(index)}">
+      <Slide
+        v-for="(column, index) in blok.columns"
+        :key="column._uid"
+        :class="{ 'carousel__slide--visible': visibleSlides.includes(index) }"
+      >
         <div class="aspect-ratio-box">
           <StoryblokComponent :blok="column" />
         </div>
@@ -15,10 +26,10 @@
 </template>
 
 <script setup>
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
-import 'vue3-carousel/dist/carousel.css';
-import { StoryblokComponent } from '@storyblok/vue';
-import { ref } from 'vue';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
+import { StoryblokComponent } from '@storyblok/vue'
+import { ref } from 'vue'
 
 // Define the props
 const props = defineProps({
@@ -26,29 +37,29 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-});
+})
 
 const settings = {
   snapAlign: 'center',
   wrapAround: true,
   transition: 500,
-};
+}
 
 const breakpoints = {
   1024: { itemsToShow: 5 }, // Desktop and Laptop
   768: { itemsToShow: 3 }, // Tablets
   0: { itemsToShow: 2 }, // Mobile
-};
+}
 
-const visibleSlides = ref([]);
+const visibleSlides = ref([])
 
 const handleSlideChange = ({ currentSlide }) => {
   visibleSlides.value = [
     currentSlide,
     (currentSlide + 1) % blok.columns.length,
     (currentSlide + 2) % blok.columns.length,
-  ];
-};
+  ]
+}
 </script>
 
 <style scoped>

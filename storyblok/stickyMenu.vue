@@ -14,11 +14,11 @@
 const props = defineProps({
   blok: {
     type: Object,
-    required: true
-  }
-});
+    required: true,
+  },
+})
 
-console.log('Sticky Menu Props:', props);
+console.log('Sticky Menu Props:', props)
 </script>
 
 <style scoped>
@@ -28,7 +28,9 @@ console.log('Sticky Menu Props:', props);
   background-color: white;
   border-top: 0.5rem solid red;
   padding: 0.75rem;
-  box-shadow: 0 5px 9px -3px #0003, 0 4px 6px -3px #00000024;
+  box-shadow:
+    0 5px 9px -3px #0003,
+    0 4px 6px -3px #00000024;
   font-weight: normal;
   color: rgb(26, 26, 26);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

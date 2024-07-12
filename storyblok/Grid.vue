@@ -1,29 +1,37 @@
 <template>
-  <div v-editable="blok" class="container mx-auto dynamic-grid" :style="gridStyle">
-    <StoryblokComponent v-for="column in blok.columns" :key="column._uid" :blok="column" />
+  <div
+    v-editable="blok"
+    class="container mx-auto dynamic-grid"
+    :style="gridStyle"
+  >
+    <StoryblokComponent
+      v-for="column in blok.columns"
+      :key="column._uid"
+      :blok="column"
+    />
   </div>
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue';
+import { defineProps, computed } from 'vue'
 
 const props = defineProps({
   blok: {
     type: Object,
-    required: true
-  }
-});
+    required: true,
+  },
+})
 
 // Compute the grid style dynamically based on the number of columns
 const gridStyle = computed(() => {
-  const numberOfColumns = props.blok.columns.length;
+  const numberOfColumns = props.blok.columns.length
   return {
     display: 'grid',
     gap: '12px',
     gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`, // Creates a fraction for each column
-    alignItems: 'start'
-  };
-});
+    alignItems: 'start',
+  }
+})
 </script>
 
 <style scoped>

@@ -1,23 +1,33 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --https --ssl-cert localhost.pem --ssl-key localhost-key.pem",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "stackblitz": "npm run dev"
+    "stackblitz": "npm run dev",
+    "lint": "eslint \"**/*.{js,vue}\" --fix",
+    "format": "prettier --write \"**/*.{js,vue}\""
   },
   "stackblitz": {
     "startCommand": "npm run stackblitz"
   },
   "devDependencies": {
+    "@eslint/js": "^9.6.0",
     "@nuxtjs/tailwindcss": "^6.12.0",
     "@storyblok/nuxt": "^6.0.4",
     "autoprefixer": "^10.4.19",
     "cross-env": "^7.0.3",
+    "eslint": "^9.6.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "globals": "^15.8.0",
     "nuxt": "^3.10.2",
     "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.4"
+    "prettier": "^3.3.2",
+    "tailwindcss": "^3.4.4",
+    "vue-eslint-parser": "^9.4.3"
   },
   "dependencies": {
     "@storyblok/vue": "^8.0.8",

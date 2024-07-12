@@ -1,85 +1,97 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { useStoryblokApi } from '@storyblok/vue';
+import { ref, onMounted, onUnmounted } from 'vue'
 
-const storyblokApi = useStoryblokApi();
-const headerMenu = ref([]);
-const isScrolled = ref(false);
-const menuOpen = ref(false);
+const isScrolled = ref(false)
+const menuOpen = ref(false)
 
-const fetchHeaderMenu = async () => {
-  try {
-    const { data } = await storyblokApi.get('cdn/stories/config', {
-      version: 'draft',
-      resolve_links: 'url',
-    });
-    headerMenu.value = data.story.content.header_menu;
-  } catch (error) {
-    console.error('Error fetching header menu:', error);
-  }
-};
+const menuItems = [
+  { name: 'Home', url: '/' },
+  { name: 'About', url: '/about' },
+  { name: 'Programs', url: '/programs' },
+  { name: 'Admissions', url: '/admissions' },
+  { name: 'News & Events', url: '/news-events' },
+  { name: 'Campus', url: '/campus' },
+]
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 0;
-};
-
-const debounce = (func, wait) => {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-};
-
-const handleScrollDebounced = debounce(handleScroll, 100);
+  isScrolled.value = window.scrollY > 0
+}
 
 const toggleMenu = () => {
-  menuOpen.value = !menuOpen.value;
+  menuOpen.value = !menuOpen.value
   if (!menuOpen.value) {
-    handleScroll(); // Ensure the scroll handler runs after closing the menu
+    handleScroll() // Ensure the scroll handler runs after closing the menu
   }
-};
+}
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScrollDebounced);
-  fetchHeaderMenu();
-  handleScroll(); // Ensure the scroll handler runs on mount
-});
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // Ensure the scroll handler runs on mount
+})
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScrollDebounced);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
   <header :class="['header', { 'header-scrolled': isScrolled }]">
-    <div class="container h-full mx-auto flex items-center justify-between px-4">
+    <div
+      class="container h-full mx-auto flex items-center justify-between px-4"
+    >
       <NuxtLink to="/">
         <img src="assets/css/images/SC_logo.png" alt="Logo" class="logo" />
       </NuxtLink>
       <nav>
         <ul class="hidden lg:flex space-x-6 font-bold text-lg text-white">
-          <li v-for="blok in headerMenu" :key="blok._uid">
-            <NuxtLink :to="blok.link.cached_url ? `/${blok.link.cached_url}` : '/'">
-              {{ blok.link.story.name }}
+          <li v-for="item in menuItems" :key="item.name">
+            <NuxtLink :to="item.url" class="nav-link">
+              {{ item.name }}
             </NuxtLink>
           </li>
         </ul>
-        <button @click="toggleMenu" class="lg:hidden text-white focus:outline-none relative z-50">
-          <svg v-if="!menuOpen" class="w-8 h-8" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7"></path>
+        <button
+          class="lg:hidden text-white focus:outline-none relative z-50"
+          @click="toggleMenu"
+        >
+          <svg
+            v-if="!menuOpen"
+            class="w-8 h-8"
+            fill="none"
+            stroke="white"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="3"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
           </svg>
-          <svg v-else class="w-8 h-8" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+          <svg
+            v-else
+            class="w-8 h-8"
+            fill="none"
+            stroke="white"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="3"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
           </svg>
         </button>
       </nav>
     </div>
     <div v-if="menuOpen" class="dropdown-menu">
       <ul>
-        <li v-for="blok in headerMenu" :key="blok._uid">
-          <NuxtLink @click="toggleMenu" :to="blok.link.cached_url ? `/${blok.link.cached_url}` : '/'">
-            {{ blok.link.story.name }}
+        <li v-for="item in menuItems" :key="item.name">
+          <NuxtLink @click="toggleMenu" :to="item.url" class="nav-link">
+            {{ item.name }}
           </NuxtLink>
         </li>
       </ul>
@@ -98,7 +110,7 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   z-index: 50;
-  transition: background-color 0.3s;
+  transition: background-color 0.1s;
 }
 
 .header-scrolled {

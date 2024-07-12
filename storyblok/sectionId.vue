@@ -11,7 +11,7 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-});
+})
 
-console.log('Section ID Props:', props);
+console.log('Section ID Props:', props)
 </script>

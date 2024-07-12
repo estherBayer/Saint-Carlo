@@ -1,12 +1,23 @@
 <template>
   <div
     v-editable="blok"
-    :class="['feature-icon', {'has-bg-color': blok.backgroundColor, 'has-bg-image': blok.backgroundImage}]"
+    :class="[
+      'feature-icon',
+      {
+        'has-bg-color': blok.backgroundColor,
+        'has-bg-image': blok.backgroundImage,
+      },
+    ]"
     :style="backgroundStyle"
   >
     <!-- Icon -->
     <div class="mb-4 icon-container">
-      <img v-if="blok.icon?.filename" :src="blok.icon.filename" alt="" class="w-12 h-12" />
+      <img
+        v-if="blok.icon?.filename"
+        :src="blok.icon.filename"
+        alt=""
+        class="w-12 h-12"
+      />
     </div>
     <!-- Title -->
     <h3 class="title">
@@ -24,29 +35,29 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps({
   blok: {
     type: Object,
-    required: true
-  }
-});
+    required: true,
+  },
+})
 
 // Compute background style
 const backgroundStyle = computed(() => {
-  const style = {};
+  const style = {}
   if (props.blok.backgroundColor) {
-    style.backgroundColor = props.blok.backgroundColor;
+    style.backgroundColor = props.blok.backgroundColor
   }
   if (props.blok.backgroundImage?.filename) {
-    style.backgroundImage = `url(${props.blok.backgroundImage.filename})`;
-    style.backgroundSize = 'cover';
-    style.backgroundRepeat = 'no-repeat';
-    style.backgroundPosition = 'center';
+    style.backgroundImage = `url(${props.blok.backgroundImage.filename})`
+    style.backgroundSize = 'cover'
+    style.backgroundRepeat = 'no-repeat'
+    style.backgroundPosition = 'center'
   }
-  return style;
-});
+  return style
+})
 </script>
 
 <style scoped>
@@ -96,4 +107,3 @@ const backgroundStyle = computed(() => {
   align-self: center;
 }
 </style>
-

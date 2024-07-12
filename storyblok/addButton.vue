@@ -5,20 +5,20 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   blok: {
     type: Object,
-    required: true
-  }
-});
+    required: true,
+  },
+})
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click'])
 
 const handleClick = (event) => {
-  emit('click', event);
-};
+  emit('click', event)
+}
 </script>
 
 <style scoped>
@@ -30,7 +30,9 @@ const handleClick = (event) => {
   text-decoration: none;
   display: inline-block; /* Ensure button does not stretch */
   white-space: nowrap; /* Prevent text from wrapping */
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
   margin: 0 left; /* Center the button horizontally */
 }
 

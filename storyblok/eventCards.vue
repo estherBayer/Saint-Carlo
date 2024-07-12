@@ -5,7 +5,7 @@
       <div class="play-icon">
         <div class="play-icon-inner">
           <svg viewBox="0 0 24 24" width="24" height="24">
-            <path d="M8 5v14l11-7z" fill="white"/>
+            <path d="M8 5v14l11-7z" fill="white" />
           </svg>
         </div>
       </div>
@@ -18,24 +18,27 @@
       <!-- Description -->
       <p class="text-base text-[#1d243d] mb-4">{{ blok.description }}</p>
       <!-- Button -->
-      <Button v-if="blok.buttonText && blok.buttonLink" :href="blok.buttonLink" target="_blank">
+      <Button
+        v-if="blok.buttonText && blok.buttonLink"
+        :href="blok.buttonLink"
+        target="_blank"
+      >
         {{ blok.buttonText }}
       </Button>
     </div>
   </div>
 </template>
 
-
 <script setup>
-import { defineProps } from 'vue';
-import Button from '~/components/Button.vue';
+import { defineProps } from 'vue'
+import Button from '~/components/Button.vue'
 
 const props = defineProps({
   blok: {
     type: Object,
-    required: true
-  }
-});
+    required: true,
+  },
+})
 </script>
 
 <style scoped>
@@ -66,7 +69,9 @@ const props = defineProps({
   border-color: #b7ffc3;
 }
 
-.title, .subtitle, .description {
+.title,
+.subtitle,
+.description {
   color: #1a1a1a;
 }
 
@@ -102,5 +107,4 @@ const props = defineProps({
 .play-icon:hover svg {
   fill: #ff0000; /* Change to your desired hover color */
 }
-
 </style>

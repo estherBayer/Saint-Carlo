@@ -9,17 +9,26 @@
     >
       <!-- Overlay -->
       <div class="gradient-overlay"></div>
-      
+
       <!-- Text and Button Overlay -->
       <div class="overlay-text">
         <h4 class="text-base font-semibold mb-1">{{ blok.name }}</h4>
         <h3 class="text-xl font-bold mb-1">{{ blok.title }}</h3>
         <p class="text-base mb-2">{{ blok.program }}</p>
-        <img :src="blok.logo?.filename || 'default-logo-url.jpg'" alt="Logo" class="logo">
+        <img
+          :src="blok.logo?.filename || 'default-logo-url.jpg'"
+          alt="Logo"
+          class="logo"
+        />
       </div>
       <div class="hover-button">
         <span class="hover-background"></span>
-        <a :href="blok.linktextUrl || '/campus'" class="hover-text" target="_blank">{{ blok.linktext || 'Read more' }} →</a>
+        <a
+          :href="blok.linktextUrl || '/campus'"
+          class="hover-text"
+          target="_blank"
+          >{{ blok.linktext || 'Read more' }} →</a
+        >
       </div>
     </div>
   </div>
@@ -31,10 +40,10 @@ defineProps({
     type: Object,
     required: true,
     default: () => ({
-      cards: []
-    })
-  }
-});
+      cards: [],
+    }),
+  },
+})
 </script>
 
 <style scoped>

@@ -1,36 +1,41 @@
 <template>
   <div v-editable="blok" :style="backgroundStyle" class="outer-container">
     <div class="inner-container-grid mx-auto mt-2 mb-12">
-      <StoryblokComponent v-for="nestedBlok in blok.bloks" :key="nestedBlok._uid" :blok="nestedBlok" class="nested-blok" />
+      <StoryblokComponent
+        v-for="nestedBlok in blok.bloks"
+        :key="nestedBlok._uid"
+        :blok="nestedBlok"
+        class="nested-blok"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 // Define the props
 const props = defineProps({
   blok: {
     type: Object,
-    required: true
-  }
-});
+    required: true,
+  },
+})
 
 // Compute background style
 const backgroundStyle = computed(() => {
-  const style = {};
+  const style = {}
   if (props.blok.backgroundColor) {
-    style.backgroundColor = props.blok.backgroundColor;
+    style.backgroundColor = props.blok.backgroundColor
   }
   if (props.blok.backgroundImage?.filename) {
-    style.backgroundImage = `url(${props.blok.backgroundImage.filename})`;
-    style.backgroundSize = 'cover';
-    style.backgroundRepeat = 'no-repeat';
-    style.backgroundPosition = 'center';
+    style.backgroundImage = `url(${props.blok.backgroundImage.filename})`
+    style.backgroundSize = 'cover'
+    style.backgroundRepeat = 'no-repeat'
+    style.backgroundPosition = 'center'
   }
-  return style;
-});
+  return style
+})
 </script>
 
 <style scoped>
@@ -51,7 +56,3 @@ const backgroundStyle = computed(() => {
   margin-bottom: 1rem; /* Adjust bottom margin as needed */
 }
 </style>
-
-
-
-
