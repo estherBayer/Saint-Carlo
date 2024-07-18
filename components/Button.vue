@@ -25,7 +25,7 @@ const handleClick = (event) => {
 
 <style scoped>
 .button {
-  background-color: #ff0000;
+  background-color: #FF0033;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
@@ -37,7 +37,7 @@ const handleClick = (event) => {
 }
 
 .button:hover {
-  background-color: #b2001b;
+  background-color: #E20026;
   transform: scale(1.05);
 }
 </style>

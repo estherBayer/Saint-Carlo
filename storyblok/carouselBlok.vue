@@ -1,11 +1,8 @@
 <template>
   <div v-editable="blok">
     <Carousel
-      v-bind="settings"
+      v-bind="carouselSettings"
       :breakpoints="breakpoints"
-      :itemsToShow="3.95"
-      :wrapAround="true"
-      :transition="500"
       @afterSlideChange="handleSlideChange"
     >
       <template #addons>
@@ -26,10 +23,10 @@
 </template>
 
 <script setup>
+import { ref, defineProps, reactive } from 'vue'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import { StoryblokComponent } from '@storyblok/vue'
-import { ref } from 'vue'
 
 // Define the props
 const props = defineProps({
@@ -39,25 +36,30 @@ const props = defineProps({
   },
 })
 
-const settings = {
+// Reactive carousel settings
+const carouselSettings = reactive({
   snapAlign: 'center',
   wrapAround: true,
   transition: 500,
-}
+  itemsToShow: 3.95,
+})
 
+// Breakpoints for responsive design
 const breakpoints = {
-  1024: { itemsToShow: 5 }, // Desktop and Laptop
-  768: { itemsToShow: 3 }, // Tablets
-  0: { itemsToShow: 2 }, // Mobile
+  1024: { itemsToShow: 5 },
+  768: { itemsToShow: 3 },
+  0: { itemsToShow: 2 },
 }
 
+// Manage visible slides
 const visibleSlides = ref([])
 
+// Handle slide changes
 const handleSlideChange = ({ currentSlide }) => {
   visibleSlides.value = [
     currentSlide,
-    (currentSlide + 1) % blok.columns.length,
-    (currentSlide + 2) % blok.columns.length,
+    (currentSlide + 1) % props.blok.columns.length,
+    (currentSlide + 2) % props.blok.columns.length,
   ]
 }
 </script>
@@ -84,18 +86,14 @@ const handleSlideChange = ({ currentSlide }) => {
   transform: scale(0.8);
 }
 
-.carousel__slide--prev {
-  opacity: 1;
-  transform: scale(0.9);
-}
-
-.carousel__slide--next {
+.carousel__slide--prev,
+.carousel__slide--next,
+.carousel__slide--active {
   opacity: 1;
   transform: scale(0.9);
 }
 
 .carousel__slide--active {
-  opacity: 1;
   transform: scale(1);
 }
 

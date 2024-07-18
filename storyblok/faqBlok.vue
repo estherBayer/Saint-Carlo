@@ -8,25 +8,22 @@
             <span class="question-text">{{ faq.question }}</span>
             <span class="plus-sign">+</span>
           </summary>
-          <div class="faq-answer">
-            <div v-html="faq.answer"></div>
-            <!-- This will render the HTML content, allowing line breaks -->
-          </div>
+          <div class="faq-answer" v-html="faq.answer"></div>
         </details>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    blok: {
-      type: Object,
-      required: true,
-    },
+<script setup>
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  blok: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
 
 <style scoped>
@@ -104,3 +101,4 @@ details[open] .plus-sign {
   }
 }
 </style>
+

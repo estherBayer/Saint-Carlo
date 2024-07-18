@@ -1,10 +1,7 @@
 <template>
   <div v-editable="blok" class="relative w-full h-screen overflow-hidden">
     <!-- Background Video or Image -->
-    <div
-      v-if="blok.video_url && isVimeo(blok.video_url.url)"
-      class="absolute inset-0 h-full w-full bg-cover bg-center"
-    >
+    <div v-if="blok.video_url && isVimeo(blok.video_url.url)" class="absolute inset-0 h-full w-full bg-cover bg-center">
       <iframe
         ref="vimeoPlayer"
         :src="getVimeoEmbedUrl(blok.video_url.url)"
@@ -12,87 +9,50 @@
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowfullscreen
+        aria-label="Background Video"
       ></iframe>
     </div>
-    <div
-      v-else-if="blok.background_image && blok.background_image.filename"
-      class="absolute inset-0 h-full w-full bg-cover bg-center"
-      :class="backgroundClass"
-      :style="{ backgroundImage: `url(${blok.background_image.filename})` }"
-    ></div>
+    <div v-else-if="blok.background_image && blok.background_image.filename" class="absolute inset-0 h-full w-full bg-cover bg-center" :class="backgroundClass" :style="{ backgroundImage: `url(${blok.background_image.filename})` }"></div>
     <!-- Black Overlay -->
     <div class="absolute inset-0 h-full w-full bg-black bg-opacity-40"></div>
     <!-- Content Grid -->
     <div class="relative h-full flex items-center justify-center px-8 lg:px-0">
       <div class="w-full lg:w-3/4 xl:w-2/3">
-        <div
-          class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-center lg:text-left"
-        >
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-center lg:text-left">
           <div class="lg:col-span-2">
             <!-- Subheadline -->
-            <h2
-              v-if="blok.subheadline"
-              class="text-headline4 lg:text-headline3 font-arimo text-white text-left pb-2"
-            >
+            <h2 v-if="blok.subheadline" class="text-headline4 lg:text-headline3 font-arimo text-white text-left pb-2">
               {{ blok.subheadline }}
             </h2>
             <!-- Headline -->
-            <h1
-              v-if="blok.headline"
-              class="text-headline2 lg:text-display font-arimo font-bold text-white text-left pb-4"
-            >
+            <h1 v-if="blok.headline" class="text-headline2 lg:text-display font-arimo font-bold text-white text-left pb-4">
               {{ blok.headline }}
             </h1>
             <!-- Columns (Features) Grid -->
             <div class="w-full lg:w-3/4 xl:w-2/3">
-              <div
-                v-if="blok.columns && blok.columns.length"
-                class="grid grid-cols-3 gap-4 mb-4"
-              >
-                <div
-                  v-for="column in blok.columns"
-                  :key="column._uid"
-                  class="flex flex-col items-center justify-center text-center"
-                >
-                  <div class="image-container">
-                    <img
-                      v-if="column.image && column.image.filename"
-                      :src="column.image.filename"
-                      :alt="column.name"
-                      class="max-w-full max-h-full object-contain"
-                    />
+              <div v-if="blok.columns && blok.columns.length" class="grid grid-cols-3 gap-4 mb-4">
+                <div v-for="column in blok.columns" :key="column._uid" class="flex flex-col items-center justify-center text-center">
+                  <div class="w-10 h-10 overflow-hidden flex items-center justify-center">
+                    <img v-if="column.image && column.image.filename" :src="column.image.filename" :alt="column.name" class="max-w-full max-h-full object-contain" />
                   </div>
-                  <p class="paragraphIcon font-arimo text-white">
-                    {{ column.name }}
-                  </p>
+                  <p class="paragraphIcon font-arimo text-white">{{ column.name }}</p>
                 </div>
               </div>
             </div>
             <!-- Bulleted List -->
-            <div
-              v-if="blok.bulleted_list && blok.bulleted_list.length"
-              class="mb-6"
-            >
+            <div v-if="blok.bulleted_list && blok.bulleted_list.length" class="mb-6">
               <ul class="space-y-2">
-                <li
-                  v-for="item in blok.bulleted_list"
-                  :key="item._uid"
-                  class="text-paragraph2 font-arimo text-white text-left"
-                >
+                <li v-for="item in blok.bulleted_list" :key="item._uid" class="text-paragraph2 font-arimo text-white text-left">
                   {{ item.text }}
                 </li>
               </ul>
             </div>
             <!-- Button -->
             <div class="flex flex-col items-start text-left">
-              <Button
-                v-if="blok.buttonText && blok.buttonLink"
-                :href="blok.buttonLink"
-              >
+              <Button v-if="blok.buttonText && blok.buttonLink" :href="blok.buttonLink">
                 {{ blok.buttonText }}
               </Button>
             </div>
-            <div class="hidden lg:block"></div>
           </div>
         </div>
       </div>
@@ -101,7 +61,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref, computed } from 'vue'
+import { defineProps, ref, computed, onMounted, watch } from 'vue'
 import Button from '~/components/Button.vue'
 
 const props = defineProps({
@@ -113,26 +73,21 @@ const props = defineProps({
 
 const vimeoPlayer = ref(null)
 
-const isVimeo = (url) => {
-  return typeof url === 'string' && url.includes('vimeo.com')
-}
+const isVimeo = (url) => typeof url === 'string' && url.includes('vimeo.com')
 
 const getVimeoEmbedUrl = (url) => {
-  if (typeof url !== 'string') return ''
   const videoId = url.split('/').pop().split('?')[0]
   return `https://player.vimeo.com/video/${videoId}?autoplay=1&loop=1&background=1`
 }
 
-const loadScript = async (src) => {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script')
-    script.src = src
-    script.async = true
-    script.onload = resolve
-    script.onerror = reject
-    document.head.appendChild(script)
-  })
-}
+const loadScript = (src) => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = src
+  script.async = true
+  script.onload = resolve
+  script.onerror = reject
+  document.head.appendChild(script)
+})
 
 const debounce = (func, wait) => {
   let timeout
@@ -142,11 +97,9 @@ const debounce = (func, wait) => {
   }
 }
 
-const backgroundClass = computed(() => {
-  return 'background-fixed-focal-point'
-})
+const backgroundClass = computed(() => 'background-fixed-focal-point')
 
-onMounted(async () => {
+const initializeVimeoPlayer = async () => {
   try {
     await loadScript('https://player.vimeo.com/api/player.js')
 
@@ -154,33 +107,30 @@ onMounted(async () => {
       const player = new Vimeo.Player(vimeoPlayer.value)
 
       // Set the playback speed
-      player.setPlaybackRate(0.75).catch((error) => {
-        console.error('Error setting playback rate:', error)
-      })
+      player.setPlaybackRate(0.75).catch(console.error)
 
       // Loop the video after 10 seconds
-      player.on(
-        'timeupdate',
-        debounce((data) => {
-          if (data.seconds >= 10) {
-            player.setCurrentTime(0).catch((error) => {
-              console.error('Error setting current time:', error)
-            })
-          }
-        }, 100),
-      )
+      player.on('timeupdate', debounce((data) => {
+        if (data.seconds >= 10) {
+          player.setCurrentTime(0).catch(console.error)
+        }
+      }, 100))
     }
   } catch (error) {
     console.error('Failed to load Vimeo Player API script:', error)
+  }
+}
+
+onMounted(initializeVimeoPlayer)
+
+watch(() => props.blok.video_url, () => {
+  if (isVimeo(props.blok.video_url.url)) {
+    initializeVimeoPlayer()
   }
 })
 </script>
 
 <style scoped>
-.image-container {
-  @apply w-10 h-10 overflow-hidden flex items-center justify-center;
-}
-
 iframe {
   box-sizing: border-box;
   height: 56.25vw;
@@ -216,13 +166,13 @@ iframe {
 
 @media (max-width: 1024px) {
   .background-fixed-focal-point {
-    background-position: 60% 30%; /* Adjust these values to position the focal point more to the right */
+    background-position: 60% 30%;
   }
 }
 
 @media (min-width: 1025px) {
   .background-fixed-focal-point {
-    background-position: center; /* Default background position for larger screens */
+    background-position: center;
   }
 }
 </style>

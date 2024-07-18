@@ -177,7 +177,7 @@ module.exports = {
         medPinkGrey: '#b6b6bf',
         medPink: '#fb909d',
         lightPink: '#ffeef0',
-        darkRed: '#b2001e',
+        darkRed: '#E20026',
         lightBlue: '#66ccff',
         lightCyan: '#E1FBFF',
         medBlue: '#006699',

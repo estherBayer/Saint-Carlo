@@ -2,12 +2,10 @@
   <div class="feature-icon-wrapper">
     <div v-editable="blok" class="feature-icon" :style="backgroundStyle">
       <!-- Title -->
-      <h4 class="text-lg text-[#1d243d] font-semibold mb-1">
-        {{ blok.subtitle }}
-      </h4>
-      <h3 class="text-2xl text-[#1d243d] font-bold mb-4">{{ blok.title }}</h3>
+      <h4 class="subtitle">{{ blok.subtitle }}</h4>
+      <h3 class="title">{{ blok.title }}</h3>
       <!-- Description -->
-      <p class="text-base text-[#1d243d] mb-4">{{ blok.description }}</p>
+      <p class="description">{{ blok.description }}</p>
       <!-- Button -->
       <Button
         v-if="blok.buttonText && blok.buttonLink"
@@ -21,16 +19,19 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
 import Button from '~/components/Button.vue'
 
 const props = defineProps({
-  blok: Object,
+  blok: {
+    type: Object,
+    required: true,
+  },
 })
 
-const backgroundStyle = {
+const backgroundStyle = computed(() => ({
   backgroundColor: '#ffffff',
-}
+}))
 </script>
 
 <style scoped>
@@ -47,7 +48,7 @@ const backgroundStyle = {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   padding: 1.5rem;
   text-align: left;
   background-color: var(--background-color, #ffffff);
@@ -69,9 +70,41 @@ const backgroundStyle = {
     1;
 }
 
-.title,
-.subtitle,
+.subtitle {
+  font-size: 1.125rem; /* 18px */
+  color: #1d243d;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-size: 1.5rem; /* 24px */
+  color: #1d243d;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
 .description {
-  color: #1a1a1a;
+  font-size: 1rem; /* 16px */
+  color: #1d243d;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .feature-icon {
+    padding: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1rem; /* 16px */
+  }
+
+  .title {
+    font-size: 1.25rem; /* 20px */
+  }
+
+  .description {
+    font-size: 0.875rem; /* 14px */
+  }
 }
 </style>

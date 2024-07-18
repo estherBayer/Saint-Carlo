@@ -2,9 +2,7 @@
   <div v-editable="blok" class="overlay-card-container">
     <!-- Card Image as Background -->
     <div
-      :style="{
-        backgroundImage: `url(${blok.image?.filename || 'default-image-url.jpg'})`,
-      }"
+      :style="{ backgroundImage: `url(${blok.image?.filename || 'default-image-url.jpg'})` }"
       class="overlay-card"
     >
       <!-- Overlay -->
@@ -39,9 +37,6 @@ defineProps({
   blok: {
     type: Object,
     required: true,
-    default: () => ({
-      cards: [],
-    }),
   },
 })
 </script>
@@ -95,8 +90,7 @@ defineProps({
   bottom: 2.5rem;
   right: 2rem;
   background-color: transparent;
-  border: 2px solid;
-  border-color: white;
+  border: 2px solid white;
   display: inline-flex;
   align-items: center;
   justify-content: center;

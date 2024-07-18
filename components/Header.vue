@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const isScrolled = ref(false)
 const menuOpen = ref(false)
@@ -19,14 +19,16 @@ const handleScroll = () => {
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
-  if (!menuOpen.value) {
-    handleScroll() // Ensure the scroll handler runs after closing the menu
-  }
+}
+
+const closeMenu = () => {
+  menuOpen.value = false
+  handleScroll()
 }
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
-  handleScroll() // Ensure the scroll handler runs on mount
+  handleScroll()
 })
 
 onUnmounted(() => {
@@ -36,9 +38,7 @@ onUnmounted(() => {
 
 <template>
   <header :class="['header', { 'header-scrolled': isScrolled }]">
-    <div
-      class="container h-full mx-auto flex items-center justify-between px-4"
-    >
+    <div class="container h-full mx-auto flex items-center justify-between px-4">
       <NuxtLink to="/">
         <img src="assets/css/images/SC_logo.png" alt="Logo" class="logo" />
       </NuxtLink>
@@ -53,6 +53,7 @@ onUnmounted(() => {
         <button
           class="lg:hidden text-white focus:outline-none relative z-50"
           @click="toggleMenu"
+          aria-label="Toggle menu"
         >
           <svg
             v-if="!menuOpen"
@@ -90,7 +91,7 @@ onUnmounted(() => {
     <div v-if="menuOpen" class="dropdown-menu">
       <ul>
         <li v-for="item in menuItems" :key="item.name">
-          <NuxtLink @click="toggleMenu" :to="item.url" class="nav-link">
+          <NuxtLink @click="closeMenu" :to="item.url" class="nav-link">
             {{ item.name }}
           </NuxtLink>
         </li>
@@ -126,14 +127,14 @@ onUnmounted(() => {
 }
 
 .nav-link:hover {
-  color: #ff0000;
+  color: #FF0033;
 }
 
 .active-link {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 4px;
-  text-decoration-color: #ff0000;
+  text-decoration-color: #FF0033;
 }
 
 nav a.router-link-active {
@@ -153,10 +154,7 @@ button:hover svg {
   stroke: #81f499;
 }
 
-button svg:nth-child(1) {
-  stroke-width: 3;
-}
-
+button svg:nth-child(1),
 button svg:nth-child(2) {
   stroke-width: 3;
 }
@@ -199,7 +197,7 @@ button:hover svg:nth-child(2) {
 }
 
 .dropdown-menu a:hover {
-  color: #ff0000;
+  color: #FF0033;
 }
 
 @media (max-width: 1024px) {

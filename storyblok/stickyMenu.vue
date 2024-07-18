@@ -44,7 +44,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #ff0000; /* Bright red on hover */
+  color: #FF0033; /* Bright red on hover */
 }
 
 nav li.active a {

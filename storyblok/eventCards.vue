@@ -105,6 +105,6 @@ const props = defineProps({
 }
 
 .play-icon:hover svg {
-  fill: #ff0000; /* Change to your desired hover color */
+  fill: #FF0033; /* Change to your desired hover color */
 }
 </style>
